@@ -51,7 +51,7 @@ class Store {
     this.setState({
       items: this.state.items.concat({
         code,
-        title: 'Новая запись №'+code
+        title: 'Новая запись №'+ code, countClick: 0
       })
     });
   }
@@ -71,15 +71,20 @@ class Store {
    * @param code
    */
   selectItem(code) {
-    this.setState({
+     this.setState({
       items: this.state.items.map(item => {
         if (item.code === code){
-          item.selected = !item.selected;
+         item.selected = !item.selected;
+         if (item.selected) {
+            item.countClick = item.countClick + 1;
+          }
         }
         return item;
       })
     });
   }
+
+
 }
 
 export default Store;
