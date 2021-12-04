@@ -1,7 +1,8 @@
-import React, {useCallback} from 'react';
+import React, {useState, useCallback} from 'react';
 import Controls from "./components/controls";
 import List from "./components/list";
 import Layout from "./components/layout";
+import Cart from "./components/cart";
 
 /**
  * Приложение
@@ -10,18 +11,32 @@ import Layout from "./components/layout";
 function App({store}) {
   console.log('App');
 
+  const [displayCart, setDisplayCart] = useState(false);
+
+  const onDisplayCart = () => {
+    setDisplayCart(!displayCart);
+  }
+
   const callbacks = {
-    onCreateItem: useCallback(() => store.createItem(), [store]),
-    onSelectItem: useCallback((code) => store.selectItem(code), [store]),
-    onDeleteItem: useCallback((code) => store.deleteItem(code), [store])
+    onAddToCart: useCallback((item) => store.addItemToCart(item), [store])
   }
 
   return (
-    <Layout head={<h1>Приложение на чистом JS</h1>}>
-      <Controls onCreate={callbacks.onCreateItem}/>
+    <Layout head={<h1>Магазин</h1>}>
+      <Controls 
+        onDisplay={onDisplayCart}
+        totalPrice={store.getTotalCartPrice()}
+        totalCount={store.getTotalCartCount()}
+      />
       <List items={store.getState().items}
-            onSelectItem={callbacks.onSelectItem}
-            onDeleteItem={callbacks.onDeleteItem}/>
+        onAddToCart={callbacks.onAddToCart}
+      />
+      <Cart 
+        display={displayCart}
+        carts={store.getState().carts}
+        totalPrice={store.getTotalCartPrice()}
+        totalCount={store.getTotalCartCount()}
+        onDisplay={onDisplayCart}/>
     </Layout>
   );
 }

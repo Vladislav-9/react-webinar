@@ -1,47 +1,33 @@
 import React, {useCallback, useState} from "react";
 import propTypes from 'prop-types';
-import plural from 'plural-ru';
 import './styles.css';
 
-function Item({item, onSelect, onDelete}){
+function Item({item, onAddToCart}){
   console.log('Item', item.title);
 
-  const [counter, setCounter] = useState(0);
-
-  const callbacks = {
-    onClick: useCallback(() => {
-      // onSelect(item.code);
-      // if (!item.selected){
-        setCounter(counter + 1);
-      // }
-    }, [item, onSelect, counter, setCounter])
-  };
+  const price = item.price.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1 ');
 
   return (
-    <div className={'Item'  + (item.selected ? ' Item_selected' : '')} onClick={callbacks.onClick}>
-      <div className='Item__number'>{item.code}</div>
-      <div className='Item__title'>
-        {item.title}
-        {counter ? ` | Выделялся ${counter} ${plural(counter, 'раз', 'раза', 'раз')}` : null}
-      </div>
-      <div className='Item__actions'>
-        <button onClick={() => onDelete(item.code)}>
-          Удалить
+    <div className='Item'>
+      <div className='Item_number'>{item.code}</div>
+      <div className='Item_title'>{item.title}</div>
+      <div className='Item_price'>{`${price} \u20bd`}</div>
+      <div className='Item_actions'>
+        <button onClick={() => onAddToCart(item)}>
+          Добавить
         </button>
       </div>
     </div>
-  )
+  );
 }
 
 Item.propTypes = {
   item: propTypes.object.isRequired,
-  onSelect: propTypes.func.isRequired,
-  onDeleted: propTypes.func.isRequired
+  onAddToCart: propTypes.func.isRequired
 }
 
 Item.defaultProps = {
-  onSelect: () => {},
-  onDeleted: () => {}
+  onAddToCart: () => {}
 }
 
 export default React.memo(Item);
