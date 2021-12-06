@@ -25,8 +25,8 @@ function App({store}) {
     <Layout head={<h1>Магазин</h1>}>
       <Controls 
         onDisplay={onDisplayCart}
-        totalPrice={store.getTotalCartPrice()}
-        totalCount={store.getTotalCartCount()}
+        totalPrice={store.totalCartPrice()}
+        totalCount={store.totalCartCount()}
       />
       <List items={store.getState().items}
         onAddToCart={callbacks.onAddToCart}
@@ -34,8 +34,8 @@ function App({store}) {
       <Cart 
         display={displayCart}
         carts={store.getState().carts}
-        totalPrice={store.getTotalCartPrice()}
-        totalCount={store.getTotalCartCount()}
+        totalPrice={store.totalCartPrice()}
+        totalCount={store.totalCartCount()}
         onDisplay={onDisplayCart}/>
     </Layout>
   );

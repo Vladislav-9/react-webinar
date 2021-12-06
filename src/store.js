@@ -85,25 +85,33 @@ class Store {
   }
 
   addItemToCart(item) {
-    let replay = false;
-    const newCart = this.state.carts.map(cartItem => {
-      if(cartItem.code === item.code) {
-        cartItem.count++;
-        replay = true;
-      }
-      return cartItem;
-    })
-    if (!replay) {
-      newCart.push({...item, count: 1});
+    if (!this.state.carts.find(cartItem => cartItem.code === item.code)) {
+      this.setState({
+        items: this.state.items,
+        carts: this.state.carts.concat({
+          ...item,
+          count: 1
+        }),
+      });
+    } else {
+      this.setState({
+        items: this.state.items,
+        carts: this.state.carts.map(cartItem => {
+          if (cartItem.code === item.code) {
+            return {
+              ...item,
+              count: cartItem.count + 1,
+            };
+          }
+          return cartItem;
+        }),
+      });
     }
-    this.setState({
-      ...this.state,
-      carts: newCart,
-      
-    });
   }
 
-  getTotalCartPrice() {
+
+
+  totalCartPrice() {
     let totalPrice = 0;
     this.state.carts.forEach(cartItem => {
       totalPrice += cartItem.price * cartItem.count;
@@ -111,14 +119,14 @@ class Store {
     return totalPrice;
   }
 
-  getTotalCartCount() {
+  totalCartCount() {
     let totalCount = 0;
     this.state.carts.forEach(cartItem => {
       totalCount += cartItem.count;
     });
     return totalCount;
   }
-
+  
   counterItem(item) {
     if (!item.selected) {
       if (typeof(item.counter) === 'undefined') item.counter = 0;
