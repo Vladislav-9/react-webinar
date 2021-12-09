@@ -1,9 +1,26 @@
+/**
+ * Хранилище состояния приложения
+ */
 class Store {
-  constructor(initState) {
-    // Состояние приложения (данные)
-    this.state = initState;
+
+  /**
+   * @param modules {Object} Классы StoreModule для создания экземпляров модулей хранилища
+   */
+  constructor(modules = {}) {
+    // Состояние приложения (данные всех модулей)
+    this.state = {};
     // Подписчики на изменение state
     this.listners = [];
+
+    // Модули
+    this.modules = {};
+    const names = Object.keys(modules);
+    for (const name of names) {
+      // Экземпляр модуля
+      this.modules[name] = new modules[name](this, name);
+      // Состояние по умочланию от модуля
+      this.state[name] = this.modules[name].initState();
+    }
   }
 
   /**
@@ -20,7 +37,7 @@ class Store {
 
   /**
    * Выбор state
-   * @return {*}
+   * @return {Object}
    */
   getState() {
     return this.state;
@@ -28,7 +45,7 @@ class Store {
 
   /**
    * Установка state
-   * @param newState {*}
+   * @param newState {Object}
    */
   setState(newState) {
     this.state = newState;
@@ -38,50 +55,35 @@ class Store {
     }
   }
 
-  // Действия приложения.
-  // @todo
-  // Нужно вынести в отдельный слой, так как Store не определяет конкретную структуру состояния.
-  // Может быть как модуль (расширение) для Store
+  /**
+   * Доступ к модулю состояния
+   * @param name {String} Название модуля
+   * @return {StoreModule}
+   */
+  get(name){
+    return this.modules[name];
+  }
+
 
   /**
-   * Создание записи
+   * @return {BasketStore}
    */
-  createItem() {
-    const code = Math.max(0, ...this.state.items.map(item => item.code)) + 1;
-    this.setState({
-      items: this.state.items.concat({
-        code,
-        title: 'Новая запись №'+code
-      })
-    });
+  get basket(){
+    return this.get('basket');
   }
 
   /**
-   * Удаление записи по её коду
-   * @param code
+   * @return {ModalsStore}
    */
-  deleteItem(code) {
-    this.setState({
-      items: this.state.items.filter(item => item.code !== code)
-    });
+  get modals(){
+    return this.get('modals');
   }
 
   /**
-   * Выделение записи по её коду
-   * @param code
+   * @return {CatalogStore}
    */
-  selectItem(code) {
-    this.setState({
-      items: this.state.items.map(item => {
-        if (item.code === code){
-          return {
-            ...item,
-            selected: !item.selected
-          };
-        }
-        return item;
-      })
-    });
+  get catalog(){
+    return this.get('catalog');
   }
 
   addItemToCart(item) {
