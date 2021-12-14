@@ -1,11 +1,11 @@
 /*Список*/
-.List {
+.List{
 
 }
-.List_item {
+.List__item{
     border-bottom: 1px dashed #ccc;
 }
 
-.List_item:first-child {
+.List__item:first-child{
     border-top: 1px dashed #ccc;
 }

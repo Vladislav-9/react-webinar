@@ -79,65 +79,16 @@ class Store {
     return this.get('modals');
   }
 
+  get itemInfo(){
+    return this.get('itemInfo');
+  }
+  
   /**
    * @return {CatalogStore}
    */
   get catalog(){
     return this.get('catalog');
   }
-
-  addItemToCart(item) {
-    if (!this.state.carts.find(cartItem => cartItem.code === item.code)) {
-      this.setState({
-        items: this.state.items,
-        carts: this.state.carts.concat({
-          ...item,
-          count: 1
-        }),
-      });
-    } else {
-      this.setState({
-        items: this.state.items,
-        carts: this.state.carts.map(cartItem => {
-          if (cartItem.code === item.code) {
-            return {
-              ...item,
-              count: cartItem.count + 1,
-            };
-          }
-          return cartItem;
-        }),
-      });
-    }
-  }
-
-
-
-  totalCartPrice() {
-    let totalPrice = 0;
-    this.state.carts.forEach(cartItem => {
-      totalPrice += cartItem.price * cartItem.count;
-    });
-    return totalPrice;
-  }
-
-  totalCartCount() {
-    let totalCount = 0;
-    this.state.carts.forEach(cartItem => {
-      totalCount += cartItem.count;
-    });
-    return totalCount;
-  }
-  
-  counterItem(item) {
-    if (!item.selected) {
-      if (typeof(item.counter) === 'undefined') item.counter = 0;
-      item.counter++;
-    }
-    return item.counter;
-  }
-
-
 }
 
 export default Store;
