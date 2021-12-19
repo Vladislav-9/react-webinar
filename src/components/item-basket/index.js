@@ -15,7 +15,7 @@ function ItemBasket({item}) {
 
   return (
     <div className='ItemBasket'>
-      <div className='ItemBasket__number'>{+item._key + 1}</div>
+      <div className='ItemBasket__number'>{item._key}</div>
       <Link to={`/items/${item._id}`} className='ItemBasket__title' onClick={callbacks.closeModal}>{item.title}</Link>
       <div className='ItemBasket__right'>
         <span className="ItemBasket__cell">{numberFormat(item.price || 0)} ₽</span>

@@ -16,8 +16,8 @@ class ItemInfoStore extends StoreModule {
     };
   }
 
-  /**
-   * Загрузка информации о товаре
+  /*
+    Загрузка информации о товаре
    */
   async loadItemInfo(id) {
     let request = `/api/v1/articles/${id}?fields=*,maidIn(title,code),category(title)`;

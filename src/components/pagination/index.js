@@ -1,13 +1,23 @@
-import React, {useState} from 'react';
+import React from 'react';
 import propTypes from 'prop-types';
 import './styles.css';
 
-function Pagination({pageAmount, renderPaginationItem}) {
-  const [currentIndex, setCurrentIndex] = useState(1);
+function Pagination({count, limit, currentPage, loadPageItems}) {
+
+  const pageAmount = Math.floor(count / limit) < (count / limit) ?
+    Math.floor(count / limit) + 1 : count / limit;
 
   let items = [];
   for (let i = 1; i <= pageAmount; i++) {
-    items.push(renderPaginationItem(i, currentIndex, setCurrentIndex));
+    const itemClass = i === currentPage ? 'Pagination__button_current' : 'Pagination__button';
+    const item = (
+      <li className='Pagination__item' key={i}>
+        <button className={itemClass} onClick={() => {loadPageItems(i);}}>
+          {i}
+        </button>
+      </li>
+    );
+    items.push(item);
   }
 
   return (
@@ -20,8 +30,10 @@ function Pagination({pageAmount, renderPaginationItem}) {
 }
 
 Pagination.propTypes = {
-  pageAmount: propTypes.number.isRequired,
-  renderPaginationItem: propTypes.func.isRequired
+  count: propTypes.number.isRequired,
+  limit: propTypes.number,
+  currentPage: propTypes.number,
+  loadPageItems: propTypes.func.isRequired
 }
 
 export default React.memo(Pagination);
