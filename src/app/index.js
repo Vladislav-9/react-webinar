@@ -1,9 +1,9 @@
 import React from 'react';
+import {Routes, Route} from "react-router-dom";
 import Main from "./main";
 import Basket from "./basket";
 import useSelector from "../utils/use-selector";
-import {BrowserRouter, Routes, Route} from "react-router-dom";
-import Item from "./item";
+import Article from "./article";
 
 /**
  * Приложение
@@ -15,13 +15,13 @@ function App() {
   }));
 
   return (
-   <BrowserRouter>
+    <>
       <Routes>
-        <Route path='/' element={<Main/>} />
-        <Route path="/items/:itemId" element={<Item/>} />
+        <Route path={''} element={<Main/>}/>
+        <Route path={"/articles/:id"} element={<Article/>}/>
       </Routes>
-     {select.name === 'basket' && <Basket/>}
-   </BrowserRouter>
+      {select.name === 'basket' && <Basket/>}
+    </>
   );
 }
 
