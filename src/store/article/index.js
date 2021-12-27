@@ -1,7 +1,6 @@
 import StoreModule from "../module";
 
 class ArticleStore extends StoreModule {
-
   /**
    * Начальное состояние
    */

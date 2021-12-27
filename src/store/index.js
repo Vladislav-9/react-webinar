@@ -2,7 +2,6 @@
  * Хранилище состояния приложения
  */
 class Store {
-
   /**
    * @param modules {Object} Классы StoreModule для создания экземпляров модулей хранилища
    */
@@ -63,8 +62,6 @@ class Store {
   get(name){
     return this.modules[name];
   }
-
-
   /**
    * @return {BasketStore}
    */
@@ -84,6 +81,27 @@ class Store {
    */
   get catalog(){
     return this.get('catalog');
+  }
+
+  /**
+   * @return {CategoriesStore}
+   */
+  get categories(){
+    return this.get('categories');
+  }
+
+  /**
+   * @return {CountriesStore}
+   */
+  get countries(){
+    return this.get('countries');
+  }
+
+  /**
+   * @return {ArticleEditStore}
+   */
+  get articleEdit(){
+    return this.get('articleEdit');
   }
 }
 

@@ -1,0 +1,18 @@
+.ArticleForm {
+  padding: 20px 35px;
+}
+
+.ArticleForm-Item {
+  margin-bottom: 25px;
+}
+
+.ArticleForm-Label {
+  margin-bottom: 5px;
+  display: block;
+}
+
+.ArticleForm-Error {
+  margin-bottom: 15px;
+  font-size: 20px;
+  color: red;
+}
