@@ -79,10 +79,6 @@ class Store {
     return this.get('modals');
   }
 
-  get itemInfo(){
-    return this.get('itemInfo');
-  }
-  
   /**
    * @return {CatalogStore}
    */

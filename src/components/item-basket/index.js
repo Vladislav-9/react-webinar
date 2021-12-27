@@ -1,10 +1,8 @@
-import React, {useCallback} from "react";
+import React from 'react';
 import propTypes from 'prop-types';
 import {Link} from "react-router-dom";
 import numberFormat from "../../utils/number-format";
-import {Link} from "react-router-dom";
 import './styles.css';
-import useStore from "../../utils/use-store";
 
 
 function ItemBasket({item, link, onLink}) {

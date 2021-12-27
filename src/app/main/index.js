@@ -6,7 +6,6 @@ import CatalogFilter from "../../containers/catalog-filter";
 import CatalogList from "../../containers/catalog-list";
 import useInit from "../../utils/use-init";
 
-
 function Main() {
 
   const store = useStore();
